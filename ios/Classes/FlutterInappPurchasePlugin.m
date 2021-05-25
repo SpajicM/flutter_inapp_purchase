@@ -551,7 +551,7 @@
                 NSDictionary *err = [NSDictionary dictionaryWithObjectsAndKeys:
                                      @"SKPaymentTransactionStateFailed", @"debugMessage",
                                      [self standardErrorCode:(int)transaction.error.code], @"code",
-                                     transaction.error.userInfo, @"underlyingError",
+                                     [transaction.error.userInfo description], @"underlyingError",
                                      [self englishErrorCodeDescription:(int)transaction.error.code], @"message",
                                      nil
                                      ];
