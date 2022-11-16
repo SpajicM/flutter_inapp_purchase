@@ -13,62 +13,65 @@ enum ResponseCodeAndroid {
 
 /// An item available for purchase from either the `Google Play Store` or `iOS AppStore`
 class IAPItem {
-  final String productId;
-  final String price;
-  final String currency;
-  final String localizedPrice;
-  final String title;
-  final String description;
-  final String introductoryPrice;
+  final String? productId;
+  final String? price;
+  final String? currency;
+  final String? localizedPrice;
+  final String? title;
+  final String? description;
+  final String? introductoryPrice;
 
   /// ios only
-  final String subscriptionPeriodNumberIOS;
-  final String subscriptionPeriodUnitIOS;
-  final String introductoryPriceNumberIOS;
-  final String introductoryPricePaymentModeIOS;
-  final String introductoryPriceNumberOfPeriodsIOS;
-  final String introductoryPriceSubscriptionPeriodIOS;
-  final List<DiscountIOS> discountsIOS;
+  final String? subscriptionPeriodNumberIOS;
+  final String? subscriptionPeriodUnitIOS;
+  final String? introductoryPriceNumberIOS;
+  final String? introductoryPricePaymentModeIOS;
+  final String? introductoryPriceNumberOfPeriodsIOS;
+  final String? introductoryPriceSubscriptionPeriodIOS;
+  final List<DiscountIOS>? discountsIOS;
 
   /// android only
-  final String subscriptionPeriodAndroid;
-  final int introductoryPriceCyclesAndroid;
-  final String introductoryPricePeriodAndroid;
-  final String freeTrialPeriodAndroid;
-  final String signatureAndroid;
+  final String? subscriptionPeriodAndroid;
+  final int? introductoryPriceCyclesAndroid;
+  final String? introductoryPricePeriodAndroid;
+  final String? freeTrialPeriodAndroid;
+  final String? signatureAndroid;
 
-  final String iconUrl;
-  final String originalJson;
+  final String? iconUrl;
+  final String? originalJson;
   final String originalPrice;
 
   /// Create [IAPItem] from a Map that was previously JSON formatted
   IAPItem.fromJSON(Map<String, dynamic> json)
-      : productId = json['productId'] as String,
-        price = json['price'] as String,
-        currency = json['currency'] as String,
-        localizedPrice = json['localizedPrice'] as String,
-        title = json['title'] as String,
-        description = json['description'] as String,
-        introductoryPrice = json['introductoryPrice'] as String,
+      : productId = json['productId'] as String?,
+        price = json['price'] as String?,
+        currency = json['currency'] as String?,
+        localizedPrice = json['localizedPrice'] as String?,
+        title = json['title'] as String?,
+        description = json['description'] as String?,
+        introductoryPrice = json['introductoryPrice'] as String?,
         introductoryPricePaymentModeIOS =
-            json['introductoryPricePaymentModeIOS'] as String,
+            json['introductoryPricePaymentModeIOS'] as String?,
         introductoryPriceNumberOfPeriodsIOS =
-            json['introductoryPriceNumberOfPeriodsIOS'] as String,
+            json['introductoryPriceNumberOfPeriodsIOS'] as String?,
         introductoryPriceSubscriptionPeriodIOS =
-            json['introductoryPriceSubscriptionPeriodIOS'] as String,
-        introductoryPriceNumberIOS = json['introductoryPriceNumberIOS'] as String,
+            json['introductoryPriceSubscriptionPeriodIOS'] as String?,
+        introductoryPriceNumberIOS =
+            json['introductoryPriceNumberIOS'] as String?,
         subscriptionPeriodNumberIOS =
-            json['subscriptionPeriodNumberIOS'] as String,
-        subscriptionPeriodUnitIOS = json['subscriptionPeriodUnitIOS'] as String,
-        subscriptionPeriodAndroid = json['subscriptionPeriodAndroid'] as String,
+            json['subscriptionPeriodNumberIOS'] as String?,
+        subscriptionPeriodUnitIOS =
+            json['subscriptionPeriodUnitIOS'] as String?,
+        subscriptionPeriodAndroid =
+            json['subscriptionPeriodAndroid'] as String?,
         introductoryPriceCyclesAndroid =
-            json['introductoryPriceCyclesAndroid'] as int,
+            json['introductoryPriceCyclesAndroid'] as int?,
         introductoryPricePeriodAndroid =
-            json['introductoryPricePeriodAndroid'] as String,
-        freeTrialPeriodAndroid = json['freeTrialPeriodAndroid'] as String,
-        signatureAndroid = json['signatureAndroid'] as String,
-        iconUrl = json['iconUrl'] as String,
-        originalJson = json['originalJson'] as String,
+            json['introductoryPricePeriodAndroid'] as String?,
+        freeTrialPeriodAndroid = json['freeTrialPeriodAndroid'] as String?,
+        signatureAndroid = json['signatureAndroid'] as String?,
+        iconUrl = json['iconUrl'] as String?,
+        originalJson = json['originalJson'] as String?,
         originalPrice = json['originalPrice'].toString(),
         discountsIOS = _extractDiscountIOS(json['discounts']);
 
@@ -82,7 +85,7 @@ class IAPItem {
   /// and then get IAPItem from "str" above
   /// IAPItem item = IAPItem.fromJSON(convert.jsonDecode(str));
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['productId'] = this.productId;
     data['price'] = this.price;
     data['currency'] = this.currency;
@@ -93,13 +96,18 @@ class IAPItem {
 
     data['subscriptionPeriodNumberIOS'] = this.subscriptionPeriodNumberIOS;
     data['subscriptionPeriodUnitIOS'] = this.subscriptionPeriodUnitIOS;
-    data['introductoryPricePaymentModeIOS'] = this.introductoryPricePaymentModeIOS;
-    data['introductoryPriceNumberOfPeriodsIOS'] = this.introductoryPriceNumberOfPeriodsIOS;
-    data['introductoryPriceSubscriptionPeriodIOS'] = this.introductoryPriceSubscriptionPeriodIOS;
+    data['introductoryPricePaymentModeIOS'] =
+        this.introductoryPricePaymentModeIOS;
+    data['introductoryPriceNumberOfPeriodsIOS'] =
+        this.introductoryPriceNumberOfPeriodsIOS;
+    data['introductoryPriceSubscriptionPeriodIOS'] =
+        this.introductoryPriceSubscriptionPeriodIOS;
 
     data['subscriptionPeriodAndroid'] = this.subscriptionPeriodAndroid;
-    data['introductoryPriceCyclesAndroid'] = this.introductoryPriceCyclesAndroid;
-    data['introductoryPricePeriodAndroid'] = this.introductoryPricePeriodAndroid;
+    data['introductoryPriceCyclesAndroid'] =
+        this.introductoryPriceCyclesAndroid;
+    data['introductoryPricePeriodAndroid'] =
+        this.introductoryPricePeriodAndroid;
     data['freeTrialPeriodAndroid'] = this.freeTrialPeriodAndroid;
     data['signatureAndroid'] = this.signatureAndroid;
 
@@ -133,48 +141,47 @@ class IAPItem {
         'iconUrl: $iconUrl, '
         'originalJson: $originalJson, '
         'originalPrice: $originalPrice, '
-        'discounts: $discountsIOS, '
-    ;
+        'discounts: $discountsIOS, ';
   }
 
-  static List<DiscountIOS> _extractDiscountIOS(dynamic json) {
-    List list = json as List;
-    List<DiscountIOS> discounts;
+  static List<DiscountIOS>? _extractDiscountIOS(dynamic json) {
+    List? list = json as List?;
+    List<DiscountIOS>? discounts;
 
     if (list != null) {
       discounts = list
           .map<DiscountIOS>(
-            (dynamic discount) => DiscountIOS.fromJSON(discount as Map<String, dynamic>),
-      )
+            (dynamic discount) =>
+                DiscountIOS.fromJSON(discount as Map<String, dynamic>),
+          )
           .toList();
     }
-
 
     return discounts;
   }
 }
 
 class DiscountIOS {
-  String identifier;
-  String type;
-  String numberOfPeriods;
-  double price;
-  String localizedPrice;
-  String paymentMode;
-  String subscriptionPeriod;
+  String? identifier;
+  String? type;
+  String? numberOfPeriods;
+  double? price;
+  String? localizedPrice;
+  String? paymentMode;
+  String? subscriptionPeriod;
 
   /// Create [DiscountIOS] from a Map that was previously JSON formatted
   DiscountIOS.fromJSON(Map<String, dynamic> json)
-      : identifier = json['identifier'] as String,
-        type = json['type'] as String,
-        numberOfPeriods = json['numberOfPeriods'] as String,
-        price = json['price'] as double,
-        localizedPrice = json['localizedPrice'] as String,
-        paymentMode = json['paymentMode'] as String,
-        subscriptionPeriod = json['subscriptionPeriod'] as String;
+      : identifier = json['identifier'] as String?,
+        type = json['type'] as String?,
+        numberOfPeriods = json['numberOfPeriods'] as String?,
+        price = json['price'] as double?,
+        localizedPrice = json['localizedPrice'] as String?,
+        paymentMode = json['paymentMode'] as String?,
+        subscriptionPeriod = json['subscriptionPeriod'] as String?;
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['identifier'] = this.identifier;
     data['type'] = this.type;
     data['numberOfPeriods'] = this.numberOfPeriods;
@@ -194,55 +201,49 @@ class DiscountIOS {
         'price: $price, '
         'localizedPrice: $localizedPrice, '
         'paymentMode: $paymentMode, '
-        'subscriptionPeriod: $subscriptionPeriod, '
-    ;
+        'subscriptionPeriod: $subscriptionPeriod, ';
   }
 }
 
 /// An item which was purchased from either the `Google Play Store` or `iOS AppStore`
 class PurchasedItem {
-  final String productId;
-  final String transactionId;
-  final DateTime transactionDate;
-  final String transactionReceipt;
-  final String purchaseToken;
-  final String orderId;
+  final String? productId;
+  final String? transactionId;
+  final DateTime? transactionDate;
+  final String? transactionReceipt;
+  final String? purchaseToken;
 
   // Android only
-  final String dataAndroid;
-  final String signatureAndroid;
-  final bool autoRenewingAndroid;
-  final bool isAcknowledgedAndroid;
-  final int purchaseStateAndroid;
-  final String originalJsonAndroid;
+  final String? dataAndroid;
+  final String? signatureAndroid;
+  final bool? autoRenewingAndroid;
+  final bool? isAcknowledgedAndroid;
+  final PurchaseState? purchaseStateAndroid;
 
   // iOS only
-  final DateTime originalTransactionDateIOS;
-  final String originalTransactionIdentifierIOS;
-  final TransactionState transactionStateIOS;
+  final DateTime? originalTransactionDateIOS;
+  final String? originalTransactionIdentifierIOS;
+  final TransactionState? transactionStateIOS;
 
   /// Create [PurchasedItem] from a Map that was previously JSON formatted
   PurchasedItem.fromJSON(Map<String, dynamic> json)
-      : productId = json['productId'] as String,
-        transactionId = json['transactionId'] as String,
+      : productId = json['productId'] as String?,
+        transactionId = json['transactionId'] as String?,
         transactionDate = _extractDate(json['transactionDate']),
-        transactionReceipt = json['transactionReceipt'] as String,
-        purchaseToken = json['purchaseToken'] as String,
-        orderId = json['orderId'] as String,
-
-        dataAndroid = json['dataAndroid'] as String,
-        signatureAndroid = json['signatureAndroid'] as String,
-        isAcknowledgedAndroid = json['isAcknowledgedAndroid'] as bool,
-        autoRenewingAndroid = json['autoRenewingAndroid'] as bool,
-        purchaseStateAndroid = json['purchaseStateAndroid'] as int,
-        originalJsonAndroid = json['originalJsonAndroid'] as String,
-
+        transactionReceipt = json['transactionReceipt'] as String?,
+        purchaseToken = json['purchaseToken'] as String?,
+        dataAndroid = json['dataAndroid'] as String?,
+        signatureAndroid = json['signatureAndroid'] as String?,
+        isAcknowledgedAndroid = json['isAcknowledgedAndroid'] as bool?,
+        autoRenewingAndroid = json['autoRenewingAndroid'] as bool?,
+        purchaseStateAndroid =
+            _decodePurchaseStateAndroid(json['purchaseStateAndroid'] as int?),
         originalTransactionDateIOS =
             _extractDate(json['originalTransactionDateIOS']),
         originalTransactionIdentifierIOS =
-            json['originalTransactionIdentifierIOS'] as String,
+            json['originalTransactionIdentifierIOS'] as String?,
         transactionStateIOS =
-            _decodeTransactionStateIOS(json['transactionStateIOS'] as int);
+            _decodeTransactionStateIOS(json['transactionStateIOS'] as int?);
 
   /// This returns transaction dates in ISO 8601 format.
   @override
@@ -252,14 +253,14 @@ class PurchasedItem {
         'transactionDate: ${transactionDate?.toIso8601String()}, '
         'transactionReceipt: $transactionReceipt, '
         'purchaseToken: $purchaseToken, '
-        'orderId: $orderId, '
+
         /// android specific
         'dataAndroid: $dataAndroid, '
         'signatureAndroid: $signatureAndroid, '
         'isAcknowledgedAndroid: $isAcknowledgedAndroid, '
         'autoRenewingAndroid: $autoRenewingAndroid, '
         'purchaseStateAndroid: $purchaseStateAndroid, '
-        'originalJsonAndroid: $originalJsonAndroid, '
+
         /// ios specific
         'originalTransactionDateIOS: ${originalTransactionDateIOS?.toIso8601String()}, '
         'originalTransactionIdentifierIOS: $originalTransactionIdentifierIOS, '
@@ -267,7 +268,7 @@ class PurchasedItem {
   }
 
   /// Coerce miliseconds since epoch in double, int, or String into DateTime format
-  static DateTime _extractDate(dynamic timestamp) {
+  static DateTime? _extractDate(dynamic timestamp) {
     if (timestamp == null) return null;
 
     int _toInt() => double.parse(timestamp.toString()).toInt();
@@ -276,60 +277,57 @@ class PurchasedItem {
 }
 
 class PurchaseResult {
-  final int responseCode;
-  final String debugMessage;
-  final String code;
-  final String message;
+  final int? responseCode;
+  final String? debugMessage;
+  final String? code;
+  final String? message;
 
   PurchaseResult({
     this.responseCode,
     this.debugMessage,
     this.code,
-    this.message
+    this.message,
   });
 
   PurchaseResult.fromJSON(Map<String, dynamic> json)
-      : responseCode = json['responseCode'] as int,
-        debugMessage = json['debugMessage'] as String,
-        code = json['code'] as String,
-        message = json['message'] as String;
+      : responseCode = json['responseCode'] as int?,
+        debugMessage = json['debugMessage'] as String?,
+        code = json['code'] as String?,
+        message = json['message'] as String?;
 
   Map<String, dynamic> toJson() => {
-    "responseCode": responseCode ?? 0,
-    "debugMessage": debugMessage ?? '',
-    "code": code ?? '',
-    "message": message ?? '',
-  };
+        "responseCode": responseCode ?? 0,
+        "debugMessage": debugMessage ?? '',
+        "code": code ?? '',
+        "message": message ?? '',
+      };
 
   @override
   String toString() {
     return 'responseCode: $responseCode, '
         'debugMessage: $debugMessage, '
         'code: $code, '
-        'message: $message'
-    ;
+        'message: $message';
   }
 }
 
-
 class ConnectionResult {
-  final bool connected;
+  final bool? connected;
 
   ConnectionResult({
     this.connected,
   });
 
   ConnectionResult.fromJSON(Map<String, dynamic> json)
-      : connected = json['connected'] as bool;
+      : connected = json['connected'] as bool?;
 
   Map<String, dynamic> toJson() => {
-    "connected": connected ?? false,
-  };
+        "connected": connected ?? false,
+      };
 
   @override
   String toString() {
-    return 'connected: $connected'
-    ;
+    return 'connected: $connected';
   }
 }
 
@@ -351,7 +349,7 @@ enum TransactionState {
   deferred,
 }
 
-TransactionState _decodeTransactionStateIOS(int rawValue) {
+TransactionState? _decodeTransactionStateIOS(int? rawValue) {
   switch (rawValue) {
     case 0:
       return TransactionState.purchasing;
@@ -363,6 +361,28 @@ TransactionState _decodeTransactionStateIOS(int rawValue) {
       return TransactionState.restored;
     case 4:
       return TransactionState.deferred;
+    default:
+      return null;
+  }
+}
+
+/// See also https://developer.android.com/reference/com/android/billingclient/api/Purchase.PurchaseState
+enum PurchaseState {
+  pending,
+
+  purchased,
+
+  unspecified,
+}
+
+PurchaseState? _decodePurchaseStateAndroid(int? rawValue) {
+  switch (rawValue) {
+    case 0:
+      return PurchaseState.unspecified;
+    case 1:
+      return PurchaseState.purchased;
+    case 2:
+      return PurchaseState.pending;
     default:
       return null;
   }

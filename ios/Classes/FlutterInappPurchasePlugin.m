@@ -70,6 +70,7 @@
         }
     } else if ([@"buyProduct" isEqualToString:call.method]) {
         NSString* identifier = (NSString*)call.arguments[@"sku"];
+        NSString* usernameHash = (NSString*)call.arguments[@"forUser"];
         SKProduct *product;
 
         for (SKProduct *p in validProducts) {
@@ -80,6 +81,7 @@
         }
         if (product) {
             SKMutablePayment *payment = [SKMutablePayment paymentWithProduct:product];
+            payment.applicationUsername = usernameHash;
             [[SKPaymentQueue defaultQueue] addPayment:payment];
         } else {
             NSDictionary *err = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -132,7 +134,7 @@
         }
     } else if ([@"requestProductWithQuantityIOS" isEqualToString:call.method]) {
         NSString* sku = (NSString*)call.arguments[@"sku"];
-        long quantity = (long)call.arguments[@"quantity"];
+        NSString* quantity = (NSString*)call.arguments[@"quantity"];
 
         SKProduct *product;
         for (SKProduct *p in validProducts) {
@@ -143,7 +145,7 @@
         }
         if (product) {
             SKMutablePayment *payment = [SKMutablePayment paymentWithProduct:product];
-            payment.quantity = quantity;
+            payment.quantity = [quantity intValue];
             [[SKPaymentQueue defaultQueue] addPayment:payment];
         } else {
             NSDictionary *err = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -233,6 +235,16 @@
         [self getAvailableItems:result];
     } else if ([@"getAppStoreInitiatedProducts" isEqualToString:call.method]) {
         [self getAppStoreInitiatedProducts:result];
+    } else if ([@"showRedeemCodesIOS" isEqualToString:call.method]) {
+#if __IPHONE_12_2
+        if (@available(iOS 14.0, *)) {
+            [[SKPaymentQueue defaultQueue] presentCodeRedemptionSheet];
+            result(@"present PromoCodes");
+            return;
+            }
+#endif
+        result(@"the functionality is available starting from ios 14.0");
+
     } else {
         result(FlutterMethodNotImplemented);
     }

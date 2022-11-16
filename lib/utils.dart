@@ -12,8 +12,8 @@ List<IAPItem> extractItems(dynamic result) {
   return products;
 }
 
-List<PurchasedItem> extractPurchased(dynamic result) {
-  List<PurchasedItem> decoded = json
+List<PurchasedItem>? extractPurchased(dynamic result) {
+  List<PurchasedItem>? decoded = json
       .decode(result.toString())
       .map<PurchasedItem>(
         (dynamic product) =>
@@ -24,9 +24,8 @@ List<PurchasedItem> extractPurchased(dynamic result) {
   return decoded;
 }
 
-
-List<PurchaseResult> extractResult(dynamic result) {
-  List<PurchaseResult> decoded = json
+List<PurchaseResult>? extractResult(dynamic result) {
+  List<PurchaseResult>? decoded = json
       .decode(result.toString())
       .map<PurchaseResult>(
         (dynamic product) =>
@@ -35,14 +34,4 @@ List<PurchaseResult> extractResult(dynamic result) {
       .toList();
 
   return decoded;
-}
-
-
-class EnumUtil {
-  /// return enum value
-  ///
-  /// example: enum Type {Hoge},
-  /// String value = EnumUtil.getValueString(Type.Hoge);
-  /// assert(value == "Hoge");
-  static String getValueString(dynamic enumType) => enumType.toString().split('.')[1];
 }
