@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/services.dart';
 import 'package:flutter_inapp_purchase/flutter_inapp_purchase.dart';
 
 void main() => runApp(new MyApp());
@@ -61,9 +62,14 @@ class _InAppState extends State<InApp> {
   Future<void> initPlatformState() async {
     String platformVersion;
     // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      platformVersion = await FlutterInappPurchase.instance.platformVersion;
+    } on PlatformException {
+      platformVersion = 'Failed to get platform version.';
+    }
 
     // prepare
-    var result = await FlutterInappPurchase.instance.initialize();
+    var result = await FlutterInappPurchase.instance.initConnection;
     print('result: $result');
 
     // If the widget was removed from the tree while the asynchronous platform
@@ -77,7 +83,7 @@ class _InAppState extends State<InApp> {
 
     // refresh items for android
     try {
-      String msg = await FlutterInappPurchase.instance.consumeAll();
+      String msg = await FlutterInappPurchase.instance.consumeAllItems;
       print('consumeAllItems: $msg');
     } catch (err) {
       print('consumeAllItems error: $err');
@@ -248,7 +254,7 @@ class _InAppState extends State<InApp> {
                           padding: EdgeInsets.all(0.0),
                           onPressed: () async {
                             print("---------- Connect Billing Button Pressed");
-                            await FlutterInappPurchase.instance.initialize();
+                            await FlutterInappPurchase.instance.initConnection;
                           },
                           child: Container(
                             padding: EdgeInsets.symmetric(horizontal: 20.0),
@@ -271,7 +277,7 @@ class _InAppState extends State<InApp> {
                           padding: EdgeInsets.all(0.0),
                           onPressed: () async {
                             print("---------- End Connection Button Pressed");
-                            await FlutterInappPurchase.instance.finalize();
+                            await FlutterInappPurchase.instance.endConnection;
                             if (_purchaseUpdatedSubscription != null) {
                               _purchaseUpdatedSubscription.cancel();
                               _purchaseUpdatedSubscription = null;
